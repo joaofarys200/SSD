@@ -1,0 +1,107 @@
+[
+  {
+    "id": "cam_01",
+    "name": "Câmara DSLR Profissional",
+    "category": "Câmaras",
+    "price": 850.0,
+    "margin": 0.25
+  },
+  {
+    "id": "cam_02",
+    "name": "Câmara de Ação 4K",
+    "category": "Câmaras",
+    "price": 299.0,
+    "margin": 0.3
+  },
+  {
+    "id": "acc_01",
+    "name": "Tripé de Alumínio Estável",
+    "category": "Acessórios",
+    "price": 49.99,
+    "margin": 0.5
+  },
+  {
+    "id": "acc_02",
+    "name": "Cartão de Memória SD 128GB (Ultra)",
+    "category": "Acessórios",
+    "price": 24.99,
+    "margin": 0.6
+  },
+  {
+    "id": "acc_03",
+    "name": "Bateria Recarregável Extra",
+    "category": "Acessórios",
+    "price": 39.99,
+    "margin": 0.45
+  },
+  {
+    "id": "lap_01",
+    "name": "Portátil Gaming 16\"",
+    "category": "Portáteis",
+    "price": 1250.0,
+    "margin": 0.15
+  },
+  {
+    "id": "lap_02",
+    "name": "Portátil Ultrabook Trabalho",
+    "category": "Portáteis",
+    "price": 899.0,
+    "margin": 0.18
+  },
+  {
+    "id": "lap_acc_01",
+    "name": "Rato Sem Fios Ergonómico",
+    "category": "Acessórios Portáteis",
+    "price": 29.99,
+    "margin": 0.55
+  },
+  {
+    "id": "lap_acc_02",
+    "name": "Mochila Impermeável para Portátil",
+    "category": "Acessórios Portáteis",
+    "price": 45.0,
+    "margin": 0.5
+  },
+  {
+    "id": "srv_01",
+    "name": "Extensão de Garantia (+3 anos)",
+    "category": "Serviços",
+    "price": 79.99,
+    "margin": 0.85
+  },
+  {
+    "id": "srv_02",
+    "name": "Seguro Contra Roubo e Danos (Anual)",
+    "category": "Serviços",
+    "price": 119.99,
+    "margin": 0.8
+  },
+  {
+    "id": "phn_01",
+    "name": "Smartphone Flagship 5G",
+    "category": "Telemóveis",
+    "price": 999.0,
+    "margin": 0.2
+  },
+  {
+    "id": "phn_acc_01",
+    "name": "Capa Protetora de Silicone",
+    "category": "Acessórios Telemóveis",
+    "price": 19.99,
+    "margin": 0.7
+  },
+  {
+    "id": "phn_acc_02",
+    "name": "Carregador Rápido 45W",
+    "category": "Acessórios Telemóveis",
+    "price": 29.99,
+    "margin": 0.6
+  },
+  {
+    "id": "pc_007",
+    "name": "Asus Cyborg 15.6",
+    "category": "Portáteis",
+    "price": 1200.0,
+    "margin": 0.35
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "rule_01",
+    "name": "Up-sell Câmara -> Cartão SD",
+    "conditions": {
+      "has_product_in_cart": [],
+      "has_category_in_cart": [
+        "Câmaras"
+      ],
+      "min_cart_total": 0.0,
+      "client_type": "Qualquer"
+    },
+    "actions": {
+      "recommend_product_id": "acc_02",
+      "discount_percent": 10.0,
+      "priority_score": 10
+    },
+    "explanation": "Como adicionou uma câmara ao carrinho, sugerimos o Cartão de Memória SD 128GB (Ultra) para poder começar a fotografar de imediato!",
+    "active": true
+  },
+  {
+    "id": "rule_02",
+    "name": "Up-sell Câmara Alta Gama -> Tripé",
+    "conditions": {
+      "has_product_in_cart": [
+        "cam_01"
+      ],
+      "has_category_in_cart": [],
+      "min_cart_total": 500.0,
+      "client_type": "Qualquer"
+    },
+    "actions": {
+      "recommend_product_id": "acc_01",
+      "discount_percent": 15.0,
+      "priority_score": 15
+    },
+    "explanation": "Para câmaras de qualidade profissional, sugerimos o Tripé de Alumínio Estável para fotos e vídeos com máxima estabilidade.",
+    "active": true
+  },
+  {
+    "id": "rule_03",
+    "name": "Mochila para Portátil",
+    "conditions": {
+      "has_product_in_cart": [],
+      "has_category_in_cart": [
+        "Portáteis"
+      ],
+      "min_cart_total": 0.0,
+      "client_type": "Qualquer"
+    },
+    "actions": {
+      "recommend_product_id": "lap_acc_02",
+      "discount_percent": 5.0,
+      "priority_score": 8
+    },
+    "explanation": "Proteja o seu novo portátil contra quedas e chuva com a Mochila Impermeável para Portátil.",
+    "active": true
+  },
+  {
+    "id": "rule_04",
+    "name": "Oferta Especial VIP Portátil -> Rato",
+    "conditions": {
+      "has_product_in_cart": [],
+      "has_category_in_cart": [
+        "Portáteis"
+      ],
+      "min_cart_total": 0.0,
+      "client_type": "VIP"
+    },
+    "actions": {
+      "recommend_product_id": "lap_acc_01",
+      "discount_percent": 20.0,
+      "priority_score": 12
+    },
+    "explanation": "Como cliente VIP, oferecemos-lhe 20% de desconto no Rato Sem Fios Ergonómico para completar a sua estação de trabalho.",
+    "active": true
+  },
+  {
+    "id": "rule_05",
+    "name": "Seguro de Proteção de Valor Elevado",
+    "conditions": {
+      "has_product_in_cart": [],
+      "has_category_in_cart": [],
+      "min_cart_total": 300.0,
+      "client_type": "Qualquer"
+    },
+    "actions": {
+      "recommend_product_id": "srv_02",
+      "discount_percent": 10.0,
+      "priority_score": 5
+    },
+    "explanation": "Para carrinhos de compras de valor superior a 300€, recomendamos a subscrição do Seguro Contra Roubo e Danos.",
+    "active": true
+  },
+  {
+    "id": "rule_06",
+    "name": "Acessórios de Telemóvel -> Capa",
+    "conditions": {
+      "has_product_in_cart": [],
+      "has_category_in_cart": [
+        "Telemóveis"
+      ],
+      "min_cart_total": 0.0,
+      "client_type": "Qualquer"
+    },
+    "actions": {
+      "recommend_product_id": "phn_acc_01",
+      "discount_percent": 10.0,
+      "priority_score": 9
+    },
+    "explanation": "Proteja o seu smartphone contra riscos e quedas com a Capa Protetora de Silicone.",
+    "active": true
+  }
+]
