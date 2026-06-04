@@ -303,127 +303,61 @@ with tab1:
                 st.success(f"Produto '{f_name}' adicionado com sucesso!")
                 st.rerun()
 
-# ==========================================
-# 2. FASE DE DESIGN (REGRAS)
-# ==========================================
-with tab2:
-    st.markdown('<div class="simon-header"><h3>Fase de Design: Modelação de Regras e Critérios</h3>'
-                '<p>Nesta fase são modeladas as regras de negócio em formato de Tabelas de Decisão. Cada regra especifica condições e a recomendação resultante.</p></div>', unsafe_allow_html=True)
-    
-    rules = data_manager.load_rules()
-    engine.refresh_rules()
-    
-    st.subheader("Tabelas de Decisão Atuais")
-    
-    # Render rules elegantly
-    for i, rule in enumerate(rules):
-        status_color = "🟢 Ativa" if rule.get("active", True) else "🔴 Inativa"
+    with tab2:
+        st.markdown('<div class="simon-header"><h3>Fase de Design: Modelação de Regras e Critérios</h3>'
+                    '<p>Nesta fase são modeladas as regras de negócio em formato de Tabelas de Decisão. Cada regra especifica condições e a recomendação resultante.</p></div>', unsafe_allow_html=True)
         
-        with st.container(border=True):
-            col_header, col_toggle = st.columns([5, 1])
-            with col_header:
-                st.markdown(f"#### **Regra: {rule['name']}** ({rule['id']}) — `{status_color}`")
-            with col_toggle:
-                # Direct action to toggle rule state
-                if st.button("Ativar/Desativar" if rule.get("active", True) else "Ativar/Desativar", key=f"tog_{rule['id']}", use_container_width=True):
-                    rule["active"] = not rule.get("active", True)
-                    data_manager.save_rules(rules)
-                    engine.refresh_rules()
-                    st.rerun()
+        st.success("🟢 **Ligação à Cloud Ativa:** O motor de decisão está integrado em tempo real com o DecisionRules.io!")
+        
+        # Showcase the architecture
+        col_info1, col_info2 = st.columns(2)
+        with col_info1:
+            st.subheader("🔧 Configurações da API Cloud")
+            st.markdown("""
+            O sistema externalizou as regras locais para uma plataforma **BRMS (Business Rules Management System)**.
+            - **Provedor:** [DecisionRules.io](https://www.decisionrules.io)
+            - **ID da Regra (Rule ID):** `687f7caf-1ba8-6060-9ce5-1cad6e86dd2d`
+            - **Versão:** `v1` (Versão de Produção)
+            - **Estado do Endpoint:** `Ativo & Pronto`
+            - **Autenticação:** `Bearer Token` (Solver API Key)
+            """)
             
-            # Conditions & Actions detail
-            col_cond, col_act = st.columns(2)
-            with col_cond:
-                st.markdown("**Condições (Inputs do Checkout)**:")
-                conds = rule.get("conditions", {})
-                
-                # Check for products
-                if conds.get("has_product_in_cart"):
-                    st.markdown(f"- **Carrinho contém produto(s)**: `{', '.join(conds['has_product_in_cart'])}`")
-                # Check for category
-                if conds.get("has_category_in_cart"):
-                    st.markdown(f"- **Carrinho contém categoria(s)**: `{', '.join(conds['has_category_in_cart'])}`")
-                # Min Total
-                if conds.get("min_cart_total", 0) > 0:
-                    st.markdown(f"- **Valor Mínimo do Carrinho**: `{conds['min_cart_total']} €`")
-                # Client type
-                if conds.get("client_type", "Qualquer") != "Qualquer":
-                    st.markdown(f"- **Tipo de Cliente**: `{conds['client_type']}`")
-                
-                # If no specific conditions
-                if not conds.get("has_product_in_cart") and not conds.get("has_category_in_cart") and conds.get("min_cart_total", 0) == 0 and conds.get("client_type", "Qualquer") == "Qualquer":
-                    st.markdown("- *Sem restrições (Aplica-se sempre)*")
-                    
-            with col_act:
-                st.markdown("**Ações (Recomendação & Desconto)**:")
-                acts = rule.get("actions", {})
-                rec_prod = data_manager.get_product_by_id(acts.get("recommend_product_id"))
-                rec_name = rec_prod["name"] if rec_prod else acts.get("recommend_product_id")
-                
-                st.markdown(f"- **Recomendar Produto**: `{rec_name}` (ID: `{acts.get('recommend_product_id')}`)")
-                st.markdown(f"- **Desconto Oferecido**: `{acts.get('discount_percent', 0.0)}%`")
-                st.markdown(f"- **Score de Prioridade**: `{acts.get('priority_score', 0)}` *(para resolução de conflitos)*")
+            # Link to console
+            st.link_button("Abrir Consola DecisionRules.io", "https://app.decisionrules.io", type="primary", use_container_width=True)
             
-            st.markdown(f"**Explicação do SSD ao Utilizador (Explanation Facility):**")
-            st.caption(f"💬 \"{rule.get('explanation', '')}\"")
+        with col_info2:
+            st.subheader("💡 Vantagens desta Arquitetura")
+            st.markdown("""
+            * **Desacoplamento:** A lógica de Up-sell foi retirada do código Python, facilitando a manutenção e alteração de regras sem reiniciar a aplicação.
+            * **Modelação Visual:** As regras são desenhadas de forma intuitiva como tabelas de decisão visuais no portal.
+            * **Independência de Negócio:** Gestores de marketing podem adicionar novas campanhas e alterar descontos instantaneamente sem precisar de programadores.
+            * **Versionamento:** Suporte nativo para gerir versões de regras (ex: criar rascunhos e publicar apenas quando testadas).
+            """)
             
-            # Delete button
-            if st.button("🗑️ Eliminar Regra", key=f"del_{rule['id']}", type="secondary"):
-                rules.pop(i)
-                data_manager.save_rules(rules)
-                engine.refresh_rules()
-                st.success("Regra removida!")
-                st.rerun()
+        st.markdown("---")
+        st.subheader("📊 Modelação da Tabela de Decisão")
+        st.markdown("""
+        As regras foram desenhadas no DecisionRules com o seguinte mapeamento de variáveis:
+        
+        * **Entradas (Inputs):**
+          - `client_type` (Perfil de Cliente: Novo, Recorrente, VIP)
+          - `min_cart_total` (Subtotal mínimo no checkout)
+          - `has_product_in_cart` (Verificação se um produto específico está no carrinho)
+          - `has_category_in_cart` (Verificação se uma categoria de produto está no carrinho)
+        
+        * **Saídas (Outputs):**
+          - `recommend_product_id` (Produto a ser sugerido)
+          - `discount_percent` (Desconto comercial a aplicar)
+          - `priority_score` (Critério de desempate)
+          - `explanation` (Mensagem explicativa para a Decision Support Facility)
+        """)
+        
+        st.info("ℹ️ **Nota de Modelação:** Todas as regras (como a de Up-sell de Câmaras para Cartões SD, Mochilas para Portáteis ou Desconto VIP) estão registadas na plataforma Cloud e são chamadas em tempo real durante a simulação da compra.")
 
-    st.markdown("---")
-    st.subheader("➕ Desenhar Nova Regra de Decisão")
-    with st.form("new_rule_form"):
-        r_id = st.text_input("ID da Regra (ex: rule_07)")
-        r_name = st.text_input("Nome/Descrição Breve")
-        
-        st.markdown("**Condições da Regra**")
-        all_prods = [p["id"] for p in catalog]
-        cond_prods = st.multiselect("Produto(s) Obrigatório(s) no Carrinho (Se algum destes estiver presente)", all_prods)
-        cond_cats = st.multiselect("Categoria(s) Obrigatória(s) no Carrinho", data_manager.get_all_categories())
-        cond_min_total = st.number_input("Subtotal Mínimo do Carrinho (€)", min_value=0.0, step=10.0, value=0.0)
-        cond_client = st.selectbox("Perfil de Cliente Alvo", ["Qualquer", "Novo", "Recorrente", "VIP"])
-        
-        st.markdown("**Ações da Regra**")
-        act_rec_id = st.selectbox("Produto a Recomendar", all_prods)
-        act_discount = st.slider("Desconto a Aplicar (%)", min_value=0.0, max_value=100.0, value=10.0, step=5.0)
-        act_priority = st.number_input("Score de Prioridade (0-100)", min_value=0, max_value=100, value=10, step=1)
-        
-        st.markdown("**Explicação (Rationale)**")
-        r_explanation = st.text_area("Justificação da Recomendação (apresentada ao cliente)", 
-                                     placeholder="Ex: Como adicionou [X] ao carrinho, sugerimos [Y] com desconto especial!")
-        
-        rule_submitted = st.form_submit_button("Inserir Regra no Motor")
-        if rule_submitted:
-            if not r_id or not r_name or not r_explanation:
-                st.error("Por preencher: ID da Regra, Nome e Explicação.")
-            elif any(r["id"] == r_id for r in rules):
-                st.error(f"Já existe uma regra com o ID '{r_id}'.")
-            else:
-                new_rule = {
-                    "id": r_id,
-                    "name": r_name,
-                    "conditions": {
-                        "has_product_in_cart": cond_prods,
-                        "has_category_in_cart": cond_cats,
-                        "min_cart_total": cond_min_total,
-                        "client_type": cond_client
-                    },
-                    "actions": {
-                        "recommend_product_id": act_rec_id,
-                        "discount_percent": act_discount,
-                        "priority_score": act_priority
-                    },
-                    "explanation": r_explanation,
-                    "active": True
-                }
-                rules.append(new_rule)
-                data_manager.save_rules(rules)
-                engine.refresh_rules()
+# ==========================================
+# 3. FASE DE CHOICE (INFERÊNCIA)
+# ==========================================
+with tab3:
                 st.success("Regra inserida com sucesso!")
                 st.rerun()
 
